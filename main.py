@@ -46,20 +46,23 @@ def setup(input_size, board_setup):
 
 
 def solve(dataframe):
-    print(dataframe)
+    # for row in dataframe:
+
 
     return dataframe
 
 
 """
     Back-tracking algoirthm requires a check to see if the board is of a valid configuration.
-    If it is return true if not, return false and continue the search.
+    If it is return true if not, return false and continue the search. Checks first that the row,
+    doesn't contain any duplicate values and doesn't contain any empty data. Then it does do the
+    same to columns.
 """
 
 
 def is_valid(board):
     for row in board:
-        if len(row) != len(set(row)):
+        if len(row) != len(set(row)) or ' ' in row:       # Convert list to set to check for duplicates
             return False
 
     columns = []
@@ -68,7 +71,7 @@ def is_valid(board):
         columns.append(column)
 
     for column in columns:
-        if len(column) != len(set(column)):
+        if len(column) != len(set(column)) or ' ' in column:
             return False
 
     return True
