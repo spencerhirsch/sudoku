@@ -6,6 +6,7 @@
 """
 
 import pandas as pd
+import numpy as np
 
 
 """
@@ -35,6 +36,19 @@ def setup(input_size, board_setup):
     print(board)  # Testing purposes to ensure that the 2d matrix is correct
 
     return board
+
+
+"""
+    Solve the puzzle and return the updated board to the callee (main function) for
+    further processing. Will be done after each iteration to ensure the algorithm is
+    processing one element at a time.
+"""
+
+
+def solve(dataframe):
+    print(dataframe)
+
+    return dataframe
 
 
 """
@@ -68,8 +82,12 @@ def output(board, input_size):
 def main():
     input_size = int(input("Size of board (n x n): "))
     board_setup = input("Input original board layout by row: ")
-    board = setup(input_size, board_setup)
-    output(board, input_size)
+    board = setup(input_size, board_setup)              # Set up board with given input
+
+    dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
+    dataframe = solve(dataframe)                        # Call function to solve game and return the updated board
+    updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
+    output(updated_board, input_size)                   # Call the output function to show user the progress
 
 
 main()
