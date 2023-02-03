@@ -7,6 +7,7 @@
 
 import pandas as pd
 import numpy as np
+import sys
 
 
 """
@@ -107,8 +108,20 @@ def output(board, input_size):
 
 
 def main():
-    input_size = int(input("Size of board (n x n): "))
-    board_setup = input("Input original board layout by row: ")
+
+    # Reads in input from text file as thats what the doc asked 
+
+    file_name = sys.argv[1]
+    file = open (file_name, 'r')
+
+    input_size = int(file.readline())
+    board_setup = file.readline()
+
+    file.close()
+
+    #input_size = int(input("Size of board (n x n): "))
+    #board_setup = input("Input original board layout by row: ")
+
     board = setup(input_size, board_setup)              # Set up board with given input
     if is_valid(board):
         output(board, input_size)
