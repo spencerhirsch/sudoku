@@ -52,6 +52,30 @@ def solve(dataframe):
 
 
 """
+    Back-tracking algoirthm requires a check to see if the board is of a valid configuration.
+    If it is return true if not, return false and continue the search.
+"""
+
+
+def is_valid(board):
+    for row in board:
+        if len(row) != len(set(row)):
+            return False
+
+    columns = []
+    for i in range(len(board)):
+        column = [row[i] for row in board]
+        columns.append(column)
+
+    for column in columns:
+        if len(column) != len(set(column)):
+            return False
+
+    return True
+
+
+
+"""
     Output the board for a better representation for the user. Takes into account
     the size of the input and organizes the board to make it better understood.
     Outputted after each move the AI makes.
@@ -83,11 +107,14 @@ def main():
     input_size = int(input("Size of board (n x n): "))
     board_setup = input("Input original board layout by row: ")
     board = setup(input_size, board_setup)              # Set up board with given input
-
-    dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
-    dataframe = solve(dataframe)                        # Call function to solve game and return the updated board
-    updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
-    output(updated_board, input_size)                   # Call the output function to show user the progress
+    if is_valid(board):
+        output(board, input_size)
+        print("Game over.")
+    else:
+        dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
+        dataframe = solve(dataframe)                        # Call function to solve game and return the updated board
+        updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
+        output(updated_board, input_size)                   # Call the output function to show user the progress
 
 
 main()
