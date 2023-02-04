@@ -90,36 +90,33 @@ def valid_move(cord1, cord2, board, size, num):
         - Assign number to valid move - DONE
         - recursively call the function - OPEN
         - Remark cell as empty if solve()... doesn't yield true. - OPEN
-            -> This is because the pathway isn't a solution for this number, and we must try another
-        - Upon completion return the solved board - OPEN
+            -> This is because the pathway isn't a solution for this number, and we must try another - DONE
+        - Upon completion return the solved board - DONE
 """
 
 def solve(board, size):
     
     nums = list(range(1, size + 1))   # list of all possible numbers
     cord1, cord2 = find_cell(board, size)
-    #print("Checking cords: ", cord1, cord2)
+    print("Checking cords: ", cord1, cord2)
 
     # Found solution
     if cord1 == -1 and cord2 == -1:
-        print("Found a solution")
-        return board
+        return True
 
     for num in nums:
         if (valid_move(cord1, cord2, board, size, num)):
             #print("Valid move: ", num)
             #print(cord1, cord2)
 
-            board[cord1][cord2] = num
-            """"
+            board[cord1][cord2] = str(num)
+
             if (solve(board, size)):
                 return True
 
             board[cord1][cord2] = "0"
-            """
 
-    #print("Unsolveable")
-    return board
+    return False
 
 
 """
@@ -184,7 +181,7 @@ def main():
     file = open (file_name, 'r')
 
     input_size = int(file.readline())
-    board_setup = file.readline()
+    board_setup = file.readline().strip()
 
     file.close()
 
@@ -196,10 +193,19 @@ def main():
         output(board, input_size)
         print("Game over.")
     else:
+        print("Original Board is: ")
+        output(board, input_size)
+        if (solve(board, input_size)):
+            print("solved board is: ")
+            output(board, input_size)
+        else:
+            print("No solution")
+        """"
         dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
         dataframe = solve(dataframe, input_size)            # Call function to solve game and return the updated board
         updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
         output(updated_board, input_size) 
+        """
 
 
 main()
