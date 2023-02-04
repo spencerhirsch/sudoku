@@ -45,13 +45,40 @@ def setup(input_size, board_setup):
     processing one element at a time.
 """
 
+def find_cell(board, input_size):
+    for i in range (input_size):
+        for j in range (input_size):
+            if board[i][j] == '0':
+                return i, j
+            
+    return -1, -1
 
-def solve(dataframe):
+def valid_move(cord1, cord2):
+
+
+    return True
+
+def solve(dataframe, input_size):
     # for row in dataframe:
-    print("Attempting to solve data frame")
-    print(dataframe)
-    print(dataframe[0][0])
+    nums = list(range(1, input_size + 1))
+    print(nums)
+    cord1, cord2 = find_cell(dataframe, input_size)
 
+    # Found solution
+    if cord1 == -1 and cord2 == -1:
+        return True
+
+    """"
+    for num in nums:
+        if (valid_move(cord1, cord2)):
+
+            dataframe[cord1][cord2] = num
+
+            if (solve(dataframe, input_size)):
+                return True
+
+            dataframe[cord1][cord2] = "0"
+    """
 
     return dataframe
 
@@ -131,7 +158,7 @@ def main():
         print("Game over.")
     else:
         dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
-        dataframe = solve(dataframe)                        # Call function to solve game and return the updated board
+        dataframe = solve(dataframe, input_size)                        # Call function to solve game and return the updated board
         updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
         output(updated_board, input_size)                   # Call the output function to show user the progress
 

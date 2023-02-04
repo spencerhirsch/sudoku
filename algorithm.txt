@@ -6,14 +6,14 @@ solve(board)        true or false
     if board if full
         save board
         return true
-        
+
     for open cell in board
         nums = valid_move_list(cell) 
         for each num in nums
             if cell can be filled with num
                 fill it
-            if (solve(board))
-                return true   / filled up board with valid moves
+                if (solve(board))
+                    return true   / filled up board with valid moves
             
             mark cell empty / backtracks
 
