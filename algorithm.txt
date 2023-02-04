@@ -1,20 +1,20 @@
-solve (board) -> return board if completed, false / whatever if it cant
-
-
-if board is full
-    return true     / We've filled up the board with valid moves
-
-for each choice on board # try every single choice
-    select valid choice
-        if (solve (board with new valid choice))
-            this choice pathway is valid, and solves it
-            return true
-    deselect choice / this pathway doesnt work
-
-return false  / exhausted every valid choice
-
-
-
 useful funcs to make:
 valid_move_list() -> returns a list of valid numbers a cell can take
+    check rows, and columns for unused numbers
 
+solve(board)        true or false
+    if board if full
+        save board
+        return true
+        
+    for open cell in board
+        nums = valid_move_list(cell) 
+        for each num in nums
+            if cell can be filled with num
+                fill it
+            if (solve(board))
+                return true   / filled up board with valid moves
+            
+            mark cell empty / backtracks
+
+        return false / the open cell didnt have a valid number to put, making this patheway unsolveable

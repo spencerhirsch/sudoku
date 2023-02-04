@@ -48,6 +48,9 @@ def setup(input_size, board_setup):
 
 def solve(dataframe):
     # for row in dataframe:
+    print("Attempting to solve data frame")
+    print(dataframe)
+    print(dataframe[0][0])
 
 
     return dataframe
