@@ -45,42 +45,81 @@ def setup(input_size, board_setup):
     processing one element at a time.
 """
 
-def find_cell(board, input_size):
-    for i in range (input_size):
-        for j in range (input_size):
+"""
+    Iterate through board to find cordinate of an open cell. If found return cordinates.
+    If no cell is open then return sentinel values -1, -1.
+"""
+
+def find_cell(board, size):
+    for i in range (size):
+        for j in range (size):
             if board[i][j] == '0':
                 return i, j
             
     return -1, -1
 
-def valid_move(cord1, cord2):
+"""
+    Given the cordinates of an open cell, check if the number we are attempting to place
+    will be a valid move. Iterate through row, and then column. Return false at any point
+    if we find the move to be invalid, else return true
+"""
 
+def valid_move(cord1, cord2, board, size, num):
+
+    # Check row for number
+    for i in range (size):
+        if board[i][cord2] == str(num):
+            #print("Not valid: ", num)
+            #print(i, cord2)
+            return False
+
+    # Check column for number
+    for j in range (size):
+        if board[cord1][j] == str(num):
+            #print("Not valid: ", num)
+            #print(cord1, j)
+            return False
 
     return True
 
-def solve(dataframe, input_size):
-    # for row in dataframe:
-    nums = list(range(1, input_size + 1))
-    print(nums)
-    cord1, cord2 = find_cell(dataframe, input_size)
+""""
+    Backtracking algorithm to solve sudoku puzzle
+    Task list so far:
+        - Find vacant cell - DONE
+        - Check if move is valid - DONE
+        - Assign number to valid move - DONE
+        - recursively call the function - OPEN
+        - Remark cell as empty if solve()... doesn't yield true. - OPEN
+            -> This is because the pathway isn't a solution for this number, and we must try another
+        - Upon completion return the solved board - OPEN
+"""
+
+def solve(board, size):
+    
+    nums = list(range(1, size + 1))   # list of all possible numbers
+    cord1, cord2 = find_cell(board, size)
+    #print("Checking cords: ", cord1, cord2)
 
     # Found solution
     if cord1 == -1 and cord2 == -1:
-        return True
+        print("Found a solution")
+        return board
 
-    """"
     for num in nums:
-        if (valid_move(cord1, cord2)):
+        if (valid_move(cord1, cord2, board, size, num)):
+            #print("Valid move: ", num)
+            #print(cord1, cord2)
 
-            dataframe[cord1][cord2] = num
-
-            if (solve(dataframe, input_size)):
+            board[cord1][cord2] = num
+            """"
+            if (solve(board, size)):
                 return True
 
-            dataframe[cord1][cord2] = "0"
-    """
+            board[cord1][cord2] = "0"
+            """
 
-    return dataframe
+    #print("Unsolveable")
+    return board
 
 
 """
@@ -158,9 +197,9 @@ def main():
         print("Game over.")
     else:
         dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
-        dataframe = solve(dataframe, input_size)                        # Call function to solve game and return the updated board
+        dataframe = solve(dataframe, input_size)            # Call function to solve game and return the updated board
         updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
-        output(updated_board, input_size)                   # Call the output function to show user the progress
+        output(updated_board, input_size) 
 
 
 main()

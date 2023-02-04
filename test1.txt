@@ -14,3 +14,5 @@ s
 | 2 | 3 |   | 1 |
 | 3 | 1 | 2 |   |
 |   |   | 2 |   |
+
+^ This isn't solveable, and has two 2s in column 2
