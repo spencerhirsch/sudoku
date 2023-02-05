@@ -27,26 +27,43 @@
 \medskip
 
 \begin{lstlisting}[frame=single]
-    useful funcs to make:
-    valid_move_list() -> returns a list of valid numbers a cell can take
-        check rows, and columns for unused numbers
+# Function next empty cell in the matrix
 
-    solve(board)        true or false
-        if board if full
-            save board
-            return true
+def find_cell(board, size):
+	iterate through the board to find the next instance of a 0 value in
+	a cell
 
-        for open cell in board
-            nums = valid_move_list(cell)
-            for each num in nums
-                if cell can be filled with num
-                    fill it
-                    if (solve(board))
-                        return true   / filled up board with valid moves
+	If no value is found, return -1, -1
 
-                mark cell empty / backtracks
+	otherwise return the coordinate of the cell that contains a 0 value	
 
-            return false / the open cell didnt have a valid number to put, making this patheway unsolveable
+
+# Function checks for a valid move given the value of the current
+# Cell
+
+def valid_move(coordinate_1, coordinate_2, board, size, number):
+
+	Iterate through the size of the board
+		Check to see if there is a cell in the column has the current val
+			if so, return false
+
+	Iterate through the size of the board
+		Check to see if there is a cell in the row that has the current val
+			If so, return false
+
+	return true  # It is a valid move for the algorithm to make
+
+
+def solve(board, size):
+	Create a list of all possible numbers based on size of the board
+	Find the coordinate to the next empty cell
+	
+	Check to see if cell is valid
+
+	iterate through all possible numbers to fill a cell
+		Check to see if the move is a vlid move
+	
+	Continue until all cells are filled or no solution is found
 \end{lstlisting}
 
 \pagebreak
