@@ -4,6 +4,16 @@
 \usepackage{indentfirst}   % Indents first paragraph. change if u want ig
 \usepackage{setspace} 
 \doublespacing
+\usepackage{graphicx}
+\graphicspath{ {./output_images/} }
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  breaklines=true,
+  postbreak=\raisebox{0ex}[0ex][0ex]{\color{red}$\hookrightarrow$\space}
+}
 
 \begin{document}
 \title{\textbf{Intermediate Submission Questions}}
@@ -12,38 +22,101 @@
 
 \maketitle
 
-\begin{enumerate}
-    \item \textbf{For the I/O input, are we generating a sudoku puzzel and randombly 
-    filling it? Or hava a text file containing the sudoku puzzle to be read in and
-    solved?}
+\textbf{Psuedo-Code for Backtracking Algorithm:}
 
-    Have a text file for input, which your program should read and solve.  
-    Have text file(s) for input and solved file(s) as output. 
+\medskip
 
-    \item \textbf{What is the difference between compilation screenshots and the three
-    sample-runs screenshots? }
+\begin{lstlisting}[frame=single]
+    useful funcs to make:
+    valid_move_list() -> returns a list of valid numbers a cell can take
+        check rows, and columns for unused numbers
 
-    I wanted to see sample runs with input/outputs as your code runs, in your submission 
-    file. Not sure how you do it. In "good old days," it would be a screen shot of 
-    command mode runs!
+    solve(board)        true or false
+        if board if full
+            save board
+            return true
 
-    \item \textbf{Can you elaborate on what the "other description" means? like describing 
-    what each function does?}
+        for open cell in board
+            nums = valid_move_list(cell)
+            for each num in nums
+                if cell can be filled with num
+                    fill it
+                    if (solve(board))
+                        return true   / filled up board with valid moves
 
-    Anything you want to tell.
+                mark cell empty / backtracks
 
-    \item \textbf{For the algorithm, are you expecting a specific kind of algorithm? My
-    partner and I plan to use the backtracking algorithm and wanted to see if we're on
-    the correct path?}
+            return false / the open cell didnt have a valid number to put, making this patheway unsolveable
+\end{lstlisting}
 
-    \item \textbf{Are we creating valid sudoku puzzles or are we taking already generated 
-    sudoku puzzles and determining if they are valid?}
+\pagebreak
 
-    \item \textbf{Intermediate! Show that your algorithm solves 3 test cases of size 4x4.}
-    
-    \item \textbf{No reference?! Mention it in case you have written from the scratch.}
 
-\end{enumerate}
+\textbf{Screenshot demonstrating compilation of code:}
 
+\bigskip
+
+\includegraphics{compilation.png}
+
+\textit{Screenshot demonstrating that the code runs.}
+
+\pagebreak
+
+\textbf{Screenshot showing output for first test case:}
+
+\bigskip
+
+\includegraphics{test1.png}
+
+\textit{Screenshot demonstrating our first test case, as well as correct output.}
+
+\pagebreak
+
+\textbf{Screenshot showing output for second test case:}
+
+\bigskip
+
+\includegraphics{test2.png}
+
+\textit{Screenshot demonstrating our second test case, as well as the correct output.}
+
+\pagebreak
+
+\textbf{Screenshot showing output for third test case (impossible):}
+
+\bigskip
+
+\includegraphics{impossible_output.png}
+
+\textit{Screenshot demonstrating the output for an impossible puzzle given to the program.}
+
+\pagebreak
+
+\textbf{Screenshot showing output for fourth test case:}
+
+\bigskip
+
+\includegraphics{test4.png}
+
+\textit{Screenshot demonstrating the output for a fourth test case, for good measure.}
+
+\pagebreak
+
+\textbf{Summary of the intermediate submission:}
+
+\bigskip
+
+\noindent For this assignment, my partner and I used the backtracking algorithm in order
+to solve for the problem. Our program reads in a text file that conatins the 
+number of rows and columns as well as a list of the values that the matrix will
+be made up of. The values will be read in by row,
+
+\[R_{00},R_{01},R_{02},R_{03},R_{10},R_{11},R_{12},R_{13},R_{20},R_{21},R_{22},R_{23},R_{30},R_{31},R_{32},R_{33}\]
+
+\noindent The values are then placed in their repsective places in the n $\times$ n matrix.
+The initial empty spaces hold a value of 0, the algorithm will search for the 0's 
+in the matrix and replace them with their correct value. We chose to use a backtracking
+algorithm in order to solve this problem. The psuedo-code for our solution is posted above.
+The solution that we came to is our original code.
 
 \end{document}

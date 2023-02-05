@@ -34,7 +34,6 @@ def setup(input_size, board_setup):
             board.append(row)
             row = []
         count += 1
-    print(board)  # Testing purposes to ensure that the 2d matrix is correct
 
     return board
 
@@ -46,9 +45,10 @@ def setup(input_size, board_setup):
 """
 
 """
-    Iterate through board to find cordinate of an open cell. If found return cordinates.
+    Iterate through board to find coordinate of an open cell. If found return cordinates.
     If no cell is open then return sentinel values -1, -1.
 """
+
 
 def find_cell(board, size):
     for i in range (size):
@@ -58,11 +58,13 @@ def find_cell(board, size):
             
     return -1, -1
 
+
 """
     Given the cordinates of an open cell, check if the number we are attempting to place
     will be a valid move. Iterate through row, and then column. Return false at any point
     if we find the move to be invalid, else return true
 """
+
 
 def valid_move(cord1, cord2, board, size, num):
 
@@ -120,7 +122,7 @@ def solve(board, size):
 
 
 """
-    Back-tracking algoirthm requires a check to see if the board is of a valid configuration.
+    Back-tracking algorithm requires a check to see if the board is of a valid configuration.
     If it is return true if not, return false and continue the search. Checks first that the row,
     doesn't contain any duplicate values and doesn't contain any empty data. Then it does do the
     same to columns.
