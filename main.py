@@ -8,6 +8,8 @@
 import pandas as pd
 import numpy as np
 import sys
+from board import make_board
+import math
 
 
 """
@@ -179,35 +181,38 @@ def main():
 
     # Reads in input from text file as thats what the doc asked 
 
-    file_name = sys.argv[1]
-    file = open (file_name, 'r')
+    # file_name = sys.argv[1]
+    # file = open (file_name, 'r')
+    #
+    # input_size = int(file.readline())
+    # board_setup = file.readline().strip()
+    #
+    # file.close()
+    for i in range(2):
+        board_setup, input_size = make_board()
+        # input_size = int(math.sqrt(len(board_setup) + 1 / 2))
 
-    input_size = int(file.readline())
-    board_setup = file.readline().strip()
+        #input_size = int(input("Size of board (n x n): "))
+        #board_setup = input("Input original board layout by row: ")
 
-    file.close()
-
-    #input_size = int(input("Size of board (n x n): "))
-    #board_setup = input("Input original board layout by row: ")
-
-    board = setup(input_size, board_setup)              # Set up board with given input
-    if is_valid(board):
-        output(board, input_size)
-        print("Game over.")
-    else:
-        print("Original Board is: ")
-        output(board, input_size)
-        if (solve(board, input_size)):
-            print("solved board is: ")
+        board = setup(input_size, board_setup)              # Set up board with given input
+        if is_valid(board):
             output(board, input_size)
+            print("Game over.")
         else:
-            print("No solution")
-        """"
-        dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
-        dataframe = solve(dataframe, input_size)            # Call function to solve game and return the updated board
-        updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
-        output(updated_board, input_size) 
-        """
+            print("Original Board is: ")
+            output(board, input_size)
+            if (solve(board, input_size)):
+                print("solved board is: ")
+                output(board, input_size)
+            else:
+                print("No solution")
+            """"
+            dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
+            dataframe = solve(dataframe, input_size)            # Call function to solve game and return the updated board
+            updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
+            output(updated_board, input_size) 
+            """
 
 
 main()

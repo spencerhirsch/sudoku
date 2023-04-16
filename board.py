@@ -7,9 +7,9 @@ import random as rand
 
 
 def make_board():
-    number_of_test = 1000
+    number_of_test = 2
     for i in range(number_of_test):
-        board_size = rand.randrange(10)
+        board_size = rand.randrange(3, 10)
         board = []
         row = []
         for j in range(board_size):
@@ -20,7 +20,6 @@ def make_board():
 
             board.append(fill_up)
 
-
         for row in board:
             remove = rand.randrange(board_size)
             indices = rand.sample(range(board_size), remove)
@@ -28,12 +27,14 @@ def make_board():
             for val in indices:
                 row[val] = 0
 
-        if len(board) > 3:
-            board_string = ''
-            for val in board:
-                board_string += str(val)
+        # if len(board) > 3:
+        board_string = ''
+        for val in board:
+            board_string += str(val)
 
-            board_string = board_string.replace('[', '').replace(']', ', ').replace(' ', '')
-            board_string = board_string[:-1]
+        board_string = board_string.replace('[', '').replace(']', ', ').replace(' ', '')
+        board_string = board_string[:-1]
 
-            print(board_string)
+        print(board_string)
+        return board_string, board_size
+
