@@ -6,35 +6,35 @@ import random as rand
 '''
 
 
-def make_board():
-    number_of_test = 2
-    for i in range(number_of_test):
-        board_size = rand.randrange(3, 10)
-        board = []
-        row = []
-        for j in range(board_size):
-            fill = rand.sample(range(board_size), board_size)
-            fill_up = []
-            for val in fill:
-                fill_up.append(val + 1)
+def make_board(board_size, remove):
+    # number_of_test = 30
+    # for i in range(number_of_test):
+        # board_size = rand.randrange(3, 10)
+    board = []
+    # remove = 0
+    for j in range(board_size):
+        fill = rand.sample(range(board_size), board_size)
+        fill_up = []
+        for val in fill:
+            fill_up.append(val + 1)
 
-            board.append(fill_up)
+        board.append(fill_up)
 
-        for row in board:
-            remove = rand.randrange(board_size)
-            indices = rand.sample(range(board_size), remove)
+    for row in board:
+        # remove = rand.randrange(board_size)
+        indices = rand.sample(range(board_size), remove)
 
-            for val in indices:
-                row[val] = 0
+        for val in indices:
+            row[val] = 0
 
-        # if len(board) > 3:
-        board_string = ''
-        for val in board:
-            board_string += str(val)
+    # if len(board) > 3:
+    board_string = ''
+    for val in board:
+        board_string += str(val)
 
-        board_string = board_string.replace('[', '').replace(']', ', ').replace(' ', '')
-        board_string = board_string[:-1]
+    board_string = board_string.replace('[', '').replace(']', ', ').replace(' ', '')
+    board_string = board_string[:-1]
 
-        print(board_string)
-        return board_string, board_size
+    print(board_string)
+    return board_string, board_size, remove
 

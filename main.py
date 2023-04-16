@@ -5,12 +5,11 @@
     Project: Pseudo-Sudoku Intermediate Submission
 """
 
-import pandas as pd
-import numpy as np
-import sys
 from board import make_board
-import math
-
+import matplotlib.pyplot as plt
+import time
+import pprint
+import random as rand
 
 """
     Process the input and validate data. Ensure that the given input
@@ -99,14 +98,16 @@ def valid_move(cord1, cord2, board, size, num):
 """
 
 def solve(board, size):
-    
+    start = time.time()
     nums = list(range(1, size + 1))   # list of all possible numbers
     cord1, cord2 = find_cell(board, size)
-    print("Checking cords: ", cord1, cord2)
+    # print("Checking cords: ", cord1, cord2)
 
     # Found solution
     if cord1 == -1 and cord2 == -1:
-        return True
+        end = time.time()
+        total = end - start
+        return True, total
 
     for num in nums:
         if (valid_move(cord1, cord2, board, size, num)):
@@ -116,11 +117,15 @@ def solve(board, size):
             board[cord1][cord2] = str(num)
 
             if (solve(board, size)):
-                return True
+                end = time.time()
+                total = end - start
+                return True, total
 
             board[cord1][cord2] = "0"
 
-    return False
+    end = time.time()
+    total = end - start
+    return False, total
 
 
 """
@@ -171,6 +176,21 @@ def output(board, input_size):
     print("-" * (4 * input_size + 1))
 
 
+def plot(back_time_dict):
+    pprint.pprint(back_time_dict)
+
+    for val in back_time_dict:
+        x = back_time_dict[val][1]
+        y = back_time_dict[val][0]
+        # ax = plt.scatter(x, y, label=val)
+        plt.scatter(x, y)
+
+        # ax.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+
 """
     Driver function that takes the input from the user. Calls all necessary
     function in order to ensure execution of the program.
@@ -178,42 +198,37 @@ def output(board, input_size):
 
 
 def main():
-
-    # Reads in input from text file as thats what the doc asked 
-
-    # file_name = sys.argv[1]
-    # file = open (file_name, 'r')
-    #
-    # input_size = int(file.readline())
-    # board_setup = file.readline().strip()
-    #
-    # file.close()
-    for i in range(2):
-        board_setup, input_size = make_board()
-        # input_size = int(math.sqrt(len(board_setup) + 1 / 2))
-
-        #input_size = int(input("Size of board (n x n): "))
-        #board_setup = input("Input original board layout by row: ")
-
-        board = setup(input_size, board_setup)              # Set up board with given input
-        if is_valid(board):
-            output(board, input_size)
-            print("Game over.")
-        else:
-            print("Original Board is: ")
-            output(board, input_size)
-            if (solve(board, input_size)):
-                print("solved board is: ")
+    values = [25, 50, 100, 200, 300]
+    number_of_test = 30
+    back_time_dict = {}
+    for val in values:                                 # Iterate values in array of sizes
+        time_log_back = []
+        removed = []
+        important = []
+        remove = rand.randrange(val)
+        for i in range(number_of_test):                # Test each value 30 times
+            total_time = 0
+            board_setup, input_size, remove = make_board(val, remove)  # Take board data from function that generates boards
+            board = setup(input_size, board_setup)     # Set up board with given input
+            # valid, total_time = is_valid(board)
+            if is_valid(board):
                 output(board, input_size)
+                print("Game over.")
             else:
-                print("No solution")
-            """"
-            dataframe = pd.DataFrame(np.array(board))           # Convert input into pandas dataframe for processing
-            dataframe = solve(dataframe, input_size)            # Call function to solve game and return the updated board
-            updated_board = dataframe.to_numpy()                # Convert dataframe back to 2d numpy array
-            output(updated_board, input_size) 
-            """
-
+                print("Original Board is: ")
+                output(board, input_size)
+                solved, total_time = solve(board, input_size)
+                if solved:
+                    print("solved board is: ")
+                    output(board, input_size)
+                else:
+                    print("No solution")
+            time_log_back.append(total_time)
+            removed.append(remove)
+        important.append(time_log_back)
+        important.append(removed)
+        back_time_dict[val] = important
+    plot(back_time_dict)
 
 main()
 
