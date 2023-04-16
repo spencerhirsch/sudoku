@@ -37,5 +37,3 @@ def make_board():
             board_string = board_string[:-1]
 
             print(board_string)
-
-make_board()
