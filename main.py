@@ -176,18 +176,53 @@ def output(board, input_size):
     print("-" * (4 * input_size + 1))
 
 
-def plot(back_time_dict):
+def calculate(dict):
+    number = len(dict[0]) / 30
+    times = []
+    removed = []
+    for i in range(int(number)):
+        time = sum(dict[0][:30]) / 30
+        del dict[0][:30]
+        remove = sum(dict[1][:30]) / 30
+        del dict[1][:30]
+        times.append(time)
+        removed.append(remove)
+
+    return times, removed
+
+
+def plot(back_time_dict, algo):
     pprint.pprint(back_time_dict)
 
     for val in back_time_dict:
         x = back_time_dict[val][1]
         y = back_time_dict[val][0]
         # ax = plt.scatter(x, y, label=val)
-        plt.scatter(x, y)
+        plt.scatter(x, y, label=val)
+    plt.legend()
+    plt.xlabel("Number of Empty Squares")
+    plt.ylabel("Computation Time (seconds)")
+    plt.title("All points of %s Algorithm" % algo)
 
-        # ax.legend()
     plt.tight_layout()
-    plt.show()
+    plt.savefig('scatter_%s' % algo)
+
+    plt.clf()
+
+    for val in back_time_dict:
+        times, removed = calculate(back_time_dict[val])
+        x = removed
+        y = times
+        plt.scatter(x, y, label=val)
+    plt.legend()
+    plt.xlabel("Number of Empty Squares")
+    plt.ylabel("Computation Time (seconds)")
+    plt.title("Average of all points of %s Algorithm" % algo)
+
+    plt.tight_layout()
+    plt.savefig('scatter_avg_%s' % algo)
+    # plt.show()
+
 
 
 
@@ -198,37 +233,40 @@ def plot(back_time_dict):
 
 
 def main():
-    values = [25, 50, 100, 200, 300]
+    values = [25, 50, 100, 200]
     number_of_test = 30
     back_time_dict = {}
     for val in values:                                 # Iterate values in array of sizes
         time_log_back = []
         removed = []
         important = []
-        remove = rand.randrange(val)
-        for i in range(number_of_test):                # Test each value 30 times
-            total_time = 0
-            board_setup, input_size, remove = make_board(val, remove)  # Take board data from function that generates boards
-            board = setup(input_size, board_setup)     # Set up board with given input
-            # valid, total_time = is_valid(board)
-            if is_valid(board):
-                output(board, input_size)
-                print("Game over.")
-            else:
-                print("Original Board is: ")
-                output(board, input_size)
-                solved, total_time = solve(board, input_size)
-                if solved:
-                    print("solved board is: ")
+        for num in range(15):
+            remove = rand.randrange(val)
+            # removed = []
+            # time_log_back = []
+            for i in range(number_of_test):                # Test each value 30 times
+                total_time = 0
+                board_setup, input_size, remove = make_board(val, remove)  # Take board data from function that generates boards
+                board = setup(input_size, board_setup)     # Set up board with given input
+                # valid, total_time = is_valid(board)
+                if is_valid(board):
                     output(board, input_size)
+                    print("Game over.")
                 else:
-                    print("No solution")
-            time_log_back.append(total_time)
-            removed.append(remove)
+                    print("Original Board is: ")
+                    output(board, input_size)
+                    solved, total_time = solve(board, input_size)
+                    if solved:
+                        print("solved board is: ")
+                        output(board, input_size)
+                    else:
+                        print("No solution")
+                time_log_back.append(total_time)
+                removed.append(remove * val)
         important.append(time_log_back)
         important.append(removed)
-        back_time_dict[val] = important
-    plot(back_time_dict)
+        back_time_dict[val*val] = important
+    plot(back_time_dict, "Backtracking")
 
 main()
 
