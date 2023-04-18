@@ -18,8 +18,8 @@ import random as rand
 
 
 def setup(input_size, board_setup):
-    board_list = board_setup.split(',') # Break up input string
-    board = []                          # Initialize board
+    board_list = board_setup.split(",")  # Break up input string
+    board = []  # Initialize board
     row = []
     count = 1
 
@@ -52,11 +52,11 @@ def setup(input_size, board_setup):
 
 
 def find_cell(board, size):
-    for i in range (size):
-        for j in range (size):
-            if board[i][j] == '0':
+    for i in range(size):
+        for j in range(size):
+            if board[i][j] == "0":
                 return i, j
-            
+
     return -1, -1
 
 
@@ -68,24 +68,24 @@ def find_cell(board, size):
 
 
 def valid_move(cord1, cord2, board, size, num):
-
     # Check row for number
-    for i in range (size):
+    for i in range(size):
         if board[i][cord2] == str(num):
-            #print("Not valid: ", num)
-            #print(i, cord2)
+            # print("Not valid: ", num)
+            # print(i, cord2)
             return False
 
     # Check column for number
-    for j in range (size):
+    for j in range(size):
         if board[cord1][j] == str(num):
-            #print("Not valid: ", num)
-            #print(cord1, j)
+            # print("Not valid: ", num)
+            # print(cord1, j)
             return False
 
     return True
 
-"""
+
+""""
     Backtracking algorithm to solve sudoku puzzle
     Task list so far:
         - Find vacant cell - DONE
@@ -97,9 +97,10 @@ def valid_move(cord1, cord2, board, size, num):
         - Upon completion return the solved board - DONE
 """
 
+
 def solve(board, size):
     start = time.time()
-    nums = list(range(1, size + 1))   # list of all possible numbers
+    nums = list(range(1, size + 1))  # list of all possible numbers
     cord1, cord2 = find_cell(board, size)
     # print("Checking cords: ", cord1, cord2)
 
@@ -110,13 +111,13 @@ def solve(board, size):
         return True, total
 
     for num in nums:
-        if (valid_move(cord1, cord2, board, size, num)):
-            #print("Valid move: ", num)
-            #print(cord1, cord2)
+        if valid_move(cord1, cord2, board, size, num):
+            # print("Valid move: ", num)
+            # print(cord1, cord2)
 
             board[cord1][cord2] = str(num)
 
-            if (solve(board, size)):
+            if solve(board, size):
                 end = time.time()
                 total = end - start
                 return True, total
@@ -138,7 +139,9 @@ def solve(board, size):
 
 def is_valid(board):
     for row in board:
-        if len(row) != len(set(row)) or ' ' in row:       # Convert list to set to check for duplicates
+        if (
+            len(row) != len(set(row)) or " " in row
+        ):  # Convert list to set to check for duplicates
             return False
 
     columns = []
@@ -147,11 +150,10 @@ def is_valid(board):
         columns.append(column)
 
     for column in columns:
-        if len(column) != len(set(column)) or ' ' in column:
+        if len(column) != len(set(column)) or " " in column:
             return False
 
     return True
-
 
 
 """
@@ -167,9 +169,9 @@ def output(board, input_size):
         index = 0
         for val in row:
             if index == 0:
-                print("| %s" % val, end='', sep='', flush=True)
+                print("| %s" % val, end="", sep="", flush=True)
             elif index != input_size - 1:
-                print(" | %s" % val, end='', sep='', flush=True)
+                print(" | %s" % val, end="", sep="", flush=True)
             else:
                 print(" | %s |" % val)
             index += 1
@@ -191,13 +193,19 @@ def calculate(dict):
     return times, removed
 
 
+"""
+    Function that handles plotting the scatter plots for the data. Once plots are constructed, they are saved to the 
+    local directory. Parameters for the function are the dictionary that stores the values of the algorithm as well as
+    the algorithm that is being plotted.  
+"""
+
+
 def plot(back_time_dict, algo):
     pprint.pprint(back_time_dict)
 
     for val in back_time_dict:
         x = back_time_dict[val][1]
         y = back_time_dict[val][0]
-        # ax = plt.scatter(x, y, label=val)
         plt.scatter(x, y, label=val)
     plt.legend()
     plt.xlabel("Number of Empty Squares")
@@ -205,7 +213,7 @@ def plot(back_time_dict, algo):
     plt.title("All points of %s Algorithm" % algo)
 
     plt.tight_layout()
-    plt.savefig('scatter_%s' % algo)
+    plt.savefig("scatter_%s" % algo)
 
     plt.clf()
 
@@ -220,10 +228,7 @@ def plot(back_time_dict, algo):
     plt.title("Average of all points of %s Algorithm" % algo)
 
     plt.tight_layout()
-    plt.savefig('scatter_avg_%s' % algo)
-    # plt.show()
-
-
+    plt.savefig("scatter_avg_%s" % algo)
 
 
 """
@@ -233,22 +238,21 @@ def plot(back_time_dict, algo):
 
 
 def main():
-    values = [25, 50, 100, 200]
+    values = [25, 50, 75, 100, 150, 200]
     number_of_test = 30
     back_time_dict = {}
-    for val in values:                                 # Iterate values in array of sizes
+    for val in values:  # Iterate values in array of sizes
         time_log_back = []
         removed = []
         important = []
         for num in range(15):
             remove = rand.randrange(val)
-            # removed = []
-            # time_log_back = []
-            for i in range(number_of_test):                # Test each value 30 times
+            for i in range(number_of_test):  # Test each value 30 times
                 total_time = 0
-                board_setup, input_size, remove = make_board(val, remove)  # Take board data from function that generates boards
-                board = setup(input_size, board_setup)     # Set up board with given input
-                # valid, total_time = is_valid(board)
+                board_setup, input_size, remove = make_board(
+                    val, remove
+                )  # Take board data from function that generates boards
+                board = setup(input_size, board_setup)  # Set up board with given input
                 if is_valid(board):
                     output(board, input_size)
                     print("Game over.")
@@ -265,8 +269,8 @@ def main():
                 removed.append(remove * val)
         important.append(time_log_back)
         important.append(removed)
-        back_time_dict[val*val] = important
+        back_time_dict[val * val] = important
     plot(back_time_dict, "Backtracking")
 
-main()
 
+main()
