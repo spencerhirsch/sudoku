@@ -271,6 +271,7 @@ def main():
         important.append(removed)
         back_time_dict[val * val] = important
     plot(back_time_dict, "Backtracking")
+    # plot(new_algo_dict, "WHATEVER THE NEW ALGO IS")
 
 
 main()
