@@ -8,6 +8,8 @@
 \graphicspath{ {images_arch} }
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
 \lstset{
   basicstyle=\ttfamily,
   columns=fullflexible,
@@ -26,38 +28,50 @@
 
 \medskip
 
-Following our original submission we have implemented another algorithm. With 
-our original submission we implemented a backtracking algorithm, which worked
-very well for our first milestone. For this final milestone we have implemented
-a backtracking with a heuristic algorithm. Both algorithms solve the given
-test cases, however after doing an analysis of the two comparing the input size and
-the number of removed cells there is a clear difference in the complexity of the
-two different algorithms. 
+In our first submission we implemented a backtracking algorithm, this
+algorithm worked incredibly well. However, we have now implemented a 
+backtracking algorithm with a heuristic. Both of the algorithms work
+in solving the test cases given, however, there is a clear difference
+in the time complexities of the algorithms. 
 
-In order to generate reasonable test cases to demonstrate the time complexity of our
-our two algorithms. We have implemented a generator to generate test cases to give to
-our algorithms. Each algorithm tests a total of 2700 different test cases with varying
-difficulty. The goal of implementing a generator was to make the tests as random as 
-possible and to easily generate a larger sum of test cases. For each n (the size of 
-the matrix, n x n) there are 15 additional test cases that have varying m (number of 
-missing cells). Each of these n x m combinations is tested a total of 30 times. This 
-is how we have determined that there are a total of 2700 different test cases run on
-each of the algorithms. 
+In our intermediate submission all of our test cases were written by hand,
+however, we believe that this did not challenge the algorithm enough. Therefore,
+for this final submission, we have implemented a a function that generates the
+test boards using randomness. Both algorithms are tested with 2700 different
+test cases each. Both of our algoriths are fed the exact same test cases to better
+demonstrate the time complexities of the algorithms.
 
-All aspects of the board aside from the size of the board is randomly determined. The 
-values for each squares are randomly assigned for the size of the board. Once all of
-the values are determined the number of removed cells is randomly selected and unique 
-to each row. The purpose of creating this random algorithm was to ensure that bias was 
-reduced. 
+In order to generate reasonable test cases to demonstrate the time complexity of 
+our our two algorithms. We have implemented a generator to generate test cases to 
+feed to our algorithms. Each algorithm tests a total of 2700 different test cases 
+with varying difficulty. The goal of implementing a generator was to make the 
+tests as random as possible and to quickly generate a more considerable sum of 
+test cases. For each n (the matrix size, n x n), 15 additional test cases have 
+varying m (number of missing cells). Each of these n x m combinations are tested 
+30 times. This is how we have determined that 2700 different test cases are run 
+on each of the algorithms. 
 
-In order to demonstrate the time complexity of each of the algorithms the cpu time is
-recorded for each test and plotted against the number of removed squares from the sudoku
-board. To ensure the accuracy of our results the same test cases are run on both of the
-algorithms. Two scatter plots are constructed for the two algorithms, one displaying every
-point gathered from the test sets and the other plot demonstrating the averages of the 15
-ponints for each n x m pair. 
+All aspects of the board, aside from the size of the board, are randomly determined. 
+The values for each square are randomly assigned depending on board size. Once all of 
+the values are determined, the number of removed cells is randomly selected and 
+unique to each row. This random algorithm was created to ensure that bias was reduced. 
 
-\pagebreak
+In order to demonstrate the time complexity of each of the algorithms, the CPU time 
+is recorded for each test and plotted against the number of removed squares from 
+the sudoku board. To ensure the accuracy of our results, the same test cases are 
+run on both of the algorithms. Two scatter plots are constructed for the two algorithms,
+one displaying every point gathered from the test sets and the other plot demonstrating
+the averages of the 30 points for each n x m pair. The legend of the plots shows the total
+number of cells for the test, being $n^2$. We felt that this would better visualize the size
+of the test as opposed to n, the number of rows or columns.
+
+\bigskip
+
+\bigskip
+
+\bigskip
+
+\bigskip
 
 \noindent \textbf{Backtracking Algorithm}
 
@@ -166,73 +180,204 @@ using this information to adjust which values we will attempt to use in our curr
 of numbers, iterating through the row, and column of our current cords, and then removing any numbers found during the iterations from our 
 current number list.
 
-\pagebreak
-
-\noindent \textbf{Analysis of Algorithms}
-
-
-
-\noindent \textit{Backtracking} \\ \\
-% Change the images
-\includegraphics[scale=0.5]{scatter_avg_Backtracking_1-1.png}
-\includegraphics[scale=0.5]{scatter_Backtracking_1-1.png}
+\bigskip
 
 \bigskip
 
-\noindent \textit{Backtracking with Heuristic} \\ \\
-% Change the images
-\includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-1.png}
-\includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-1.png}
+\bigskip
 
+\bigskip
 
-From the images it is clear to see that there is a significant difference in
-time complexity between the backtracking algorithm and the forward-checking 
-with heuristic algorithm. The graph with the average of the points of the
-backtracking shows what we believe to be O($n^2$) for time complexity. As the
-number of missing cells increases there appears to be an exponential growth
-with respect to time. However, in the case of the backtracking algorithm with
-a heuristic, it is much more difficult to determine Big-Oh complexity. In this 
-specific test case it appears to loosely conform to O(logn) complexity. However,
-strictly looking at the y-axis on both of the graphs we can see that the backtracking 
-with heuristic algorithm performs much quicker than the previous backtracking algorithm.
+\pagebreak 
+
+\noindent \textbf{Analysis of Algorithms}
+
+\bigskip
+
+% \noindent \textit{The lengend of the plots demonstrates the product of the size of the column and row sizes, being $n^2$. This
+% was used to better showcase the true size of the test as opposed to just the size of the rows or columns of
+% the board.}
+
+% \bigskip
+
+% \noindent \textit{Backtracking}
+
+\bigskip
+
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_avg_Backtracking_1-1.png}
+		\label{Test 1: Average of all points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_Backtracking_1-1.png}
+		\label{Test 1: Scatter plot of all collected points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\caption{Data Collected from Backtracking algorithm, Test 1.}
+\end{figure}
+
+\bigskip
+
+% \noindent \textit{Backtracking with Heuristic} 
+
+% \bigskip
+
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_avg_Backtracking_w_Heuristic-1.png}
+		\label{Test 1: Average of all points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_Backtracking_w_Heuristic-1.png}
+		\label{Test 1: Scatter plot of all collected points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\caption{Data Collected from Backtracking algorithm with a Heuristic, Test 1.}
+\end{figure}
+\bigskip
+
+From the graphs it is clear to see that there is a significant difference in
+time complexity between the backtracking algorithm and the backtracking
+with heuristic algorithm. \textit{Figure 1} shows what we believe to be O($n^2$) 
+time complexity. As the number of missing cells increase there appears 
+to be an exponential growth with respect to time. However, in the case of the backtracking algorithm with
+a heuristic (\textit{Figure 2}), it is much more difficult to determine Big-Oh complexity. In this 
+specific test case, Figure 2 appears to loosely conform to O(logn) complexity. However,
+strictly looking at the y-axis(CPU time in seconds) on both \textit{Figure 1} and \textit{Figure 2} we can see that the backtracking 
+with heuristic algorithm performs much quicker than our previous backtracking algorithm.
 
 \bigskip
 
 Here are some additional examples with some other test cases.
 
-\noindent \textit{Backtracking} \\ \\
-% Change the images
-\includegraphics[scale=0.5]{scatter_avg_Backtracking_1-2.png}
-\includegraphics[scale=0.5]{scatter_Backtracking_1-2.png}
+% \noindent \textit{Backtracking} 
 
 \bigskip
 
-\noindent \textit{Backtracking with Heuristic} \\ \\
-% Change the images
-\includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-2.png}
-\includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-2.png}
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_avg_Backtracking_1-2.png}
+		\label{Test 2: Average of all points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_Backtracking_1-2.png}
+		\label{Test 2: Scatter plot of all collected points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\caption{Data Collected from Backtracking algorithm, Test 2.}
+\end{figure}
 
-Again, with this test case the backtracking algorithm appears to be in the shape of O($n^2$).
-However, the backtracking algorithm with heuristic appears to be more in the shape of constant
+\bigskip
+
+% Change the images
+% \includegraphics[scale=0.5]{scatter_avg_Backtracking_1-2.png}
+% \includegraphics[scale=0.5]{scatter_Backtracking_1-2.png}
+
+\bigskip
+
+% \noindent \textit{Backtracking with Heuristic}
+
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_avg_Backtracking_w_Heuristic-2.png}
+		\label{Test 2: Average of all points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_Backtracking_w_Heuristic-2.png}
+		\label{Test 2: Scatter plot of all collected points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\caption{Data Collected from Backtracking algorithm with a Heuristic, Test 2.}
+\end{figure}
+\bigskip
+
+% Change the images
+% \includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-2.png}
+% \includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-2.png}
+
+Again, with this test case the backtracking algorithm(\textit{Figure 3}) appears to be in the shape of O($n^2$).
+However, the backtracking algorithm with heuristic(\textit{Figure 4}) appears to be more in the shape of constant
 time, besides the single point which is clearly an outliar. Despite the drastic change in the 
 shape of the graph for the backtracking with heuristic algorithm, the backtracking with heuristic algorithm
 performs much quicker than the backtracking algorithm that was originally implemented.
 
 \bigskip
 
-\noindent \textit{Backtracking} \\ \\
-% Change the images
-\includegraphics[scale=0.5]{scatter_avg_Backtracking_1-3.png}
-\includegraphics[scale=0.5]{scatter_Backtracking_1-3.png}
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_avg_Backtracking_1-3.png}
+		\label{Test 3: Average of all points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_Backtracking_1-3.png}
+		\label{Test 3: Scatter plot of all collected points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\caption{Data Collected from Backtracking algorithm, Test 3.}
+\end{figure}
 
 \bigskip
 
-\noindent \textit{Backtracking with Heuristic} \\ \\
-% Change the images
-\includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-3.png}
-\includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-3.png}
 
-These test cases aligned more with the first test case listed above. The
+
+% Change the images
+% \includegraphics[scale=0.5]{scatter_avg_Backtracking_1-3.png}
+% \includegraphics[scale=0.5]{scatter_Backtracking_1-3.png}
+
+\bigskip
+
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_avg_Backtracking_w_Heuristic-3.png}
+		\label{Test 3: Average of all points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4\textwidth}
+		\centering
+		\includegraphics[scale=0.4]{scatter_Backtracking_w_Heuristic-3.png}
+		\label{Test 3: Scatter plot of all collected points}
+		\caption{Items in the legend demonstrate the total number of cells, $n^2$}
+	\end{subfigure}
+	\caption{Data Collected from Backtracking algorithm with a Heuristic, Test 3.}
+\end{figure}
+
+\bigskip
+
+
+% Change the images
+% \includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-3.png}
+% \includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-3.png}
+
+These test cases aligned more with the first test case depicted in both \textit{Figure 1} and \textit{Figure 2}. The
 backtracking algorithm again having more of a O($n^2$) complexity while the
 backtracking with heuristic algorithm had more of a O(logn) shape. Again, 
 the averages of the tests showed that the backtracking algorithm with heuristic
@@ -242,13 +387,13 @@ signigicantly outperformed the backtracking algorihtm that was originally used.
 
 Overall, throughout all of the test cases that we ran on both of the algorithms. 
 The newly implemented, backtracking with heuristic, significantly outperformed 
-our algorithm from the first milestone submission. Solving the problem in the 
-fraction of the time. The backtracking algorithm would usually take more than a second
+our algorithm from the first milestone submission, backtracking. Solving the problem in the 
+fraction of the time. The backtracking algorithm would typically take more than a second
 to solve the larger n x m problems while the backtracking with heuristic was capable of
 solving it in less than 0.0002 seconds. We are very pleased and surprised with the outcome
 of these results. It was very interesting to see such a drastic increase in performance 
 when comparing the two algorithms and their ability to solve such large test cases. The largest
-test case is a matrix of 40000 cells and our backtracking with heuristic algorithm was capable
+test case is a matrix of 40000 cells, a matrix 200 x 200, our backtracking with heuristic algorithm was capable
 of solving it in less than 0.0002 seconds.
 
 
@@ -270,5 +415,6 @@ of solving it in less than 0.0002 seconds.
 % in the matrix and replace them with their correct value. We chose to use a backtracking
 % algorithm in order to solve this problem. The psuedo-code for our solution is posted above.
 % The solution that we came to is our original code.
+
 
 \end{document}
