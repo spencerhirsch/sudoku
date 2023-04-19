@@ -86,23 +86,37 @@ def valid_move(cord1, cord2, board, size, num):
 
 
 """"
+    Forward checking, unsure if this will really do much to speed it up in the grand scheme of things
+"""
+
+def get_unused_numbers(board, cord1, cord2, size):
+    
+    nums = set(range(1, size + 1))
+    # Iterate through col, and remove dupes from set
+    
+    for i in range (size):
+        current_num = int(board[i][cord2])
+        if current_num in nums:
+            nums.remove(current_num)
+            
+    # Iterate through row, and remove dupes from set
+    
+    for j in range (size):
+        current_num = int(board[cord1][j])
+        if current_num in nums:
+            nums.remove(current_num)
+    
+    return list(nums)
+
+""""
     Backtracking algorithm to solve sudoku puzzle
-    Task list so far:
-        - Find vacant cell - DONE
-        - Check if move is valid - DONE
-        - Assign number to valid move - DONE
-        - recursively call the function - OPEN
-        - Remark cell as empty if solve()... doesn't yield true. - OPEN
-            -> This is because the pathway isn't a solution for this number, and we must try another - DONE
-        - Upon completion return the solved board - DONE
 """
 
 
 def solve(board, size):
     start = time.time()
-    nums = list(range(1, size + 1))  # list of all possible numbers
     cord1, cord2 = find_cell(board, size)
-    # print("Checking cords: ", cord1, cord2)
+    nums = list(range(1, size + 1))  # list of all possible numbers
 
     # Found solution
     if cord1 == -1 and cord2 == -1:
@@ -112,8 +126,6 @@ def solve(board, size):
 
     for num in nums:
         if valid_move(cord1, cord2, board, size, num):
-            # print("Valid move: ", num)
-            # print(cord1, cord2)
 
             board[cord1][cord2] = str(num)
 
@@ -128,6 +140,32 @@ def solve(board, size):
     total = end - start
     return False, total
 
+def solve2 (board, size):
+    start = time.time()
+    cord1, cord2 = find_cell(board, size)
+    nums = get_unused_numbers(board, cord1, cord2, size)   # list of all valid numbers to try
+
+    # Found solution
+    if cord1 == -1 and cord2 == -1:
+        end = time.time()
+        total = end - start
+        return True, total
+
+    for num in nums:
+        if (valid_move(cord1, cord2, board, size, num)):
+
+            board[cord1][cord2] = str(num)
+
+            if (solve2(board, size)):
+                end = time.time()
+                total = end - start
+                return True, total
+
+            board[cord1][cord2] = "0"
+
+    end = time.time()
+    total = end - start
+    return False, total
 
 """
     Back-tracking algorithm requires a check to see if the board is of a valid configuration.
@@ -236,8 +274,7 @@ def plot(back_time_dict, algo):
     function in order to ensure execution of the program.
 """
 
-
-def main():
+def alg1():
     values = [25, 50, 75, 100, 150, 200]
     number_of_test = 30
     back_time_dict = {}
@@ -270,7 +307,111 @@ def main():
         important.append(time_log_back)
         important.append(removed)
         back_time_dict[val * val] = important
-    plot(back_time_dict, "Backtracking")
+    plot(back_time_dict, "Backtracking_1")
+
+
+def alg2():
+    values = [25, 50, 75, 100, 150, 200]
+    number_of_test = 30
+    back_time_dict = {}
+    
+    for val in values:  # Iterate values in array of sizes
+        time_log_back = []
+        removed = []
+        important = []
+        for num in range(15):
+            remove = rand.randrange(val)
+            for i in range(number_of_test):  # Test each value 30 times
+                total_time = 0
+                board_setup, input_size, remove = make_board(
+                    val, remove
+                )  # Take board data from function that generates boards
+                board = setup(input_size, board_setup)  # Set up board with given input
+                if is_valid(board):
+                    output(board, input_size)
+                    print("Game over.")
+                else:
+                    print("Original Board is: ")
+                    output(board, input_size)
+                    solved, total_time = solve2(board, input_size)
+                    if solved:
+                        print("solved board is: ")
+                        output(board, input_size)
+                    else:
+                        print("No solution")
+                time_log_back.append(total_time)
+                removed.append(remove * val)
+        important.append(time_log_back)
+        important.append(removed)
+        back_time_dict[val * val] = important
+    plot(back_time_dict, "Backtracking_W_Heuristic")
+
+
+def alg_combined():
+
+    values = [25, 50, 75, 100, 150, 200]
+    number_of_test = 30
+    back_time_dict = {}
+
+    back_time_dict2 = {}
+
+    for val in values:  # Iterate values in array of sizes
+        time_log_back = []
+        removed = []
+        important = []
+
+        time_log_back2 = []
+        removed2 = []
+        important2 = []
+
+        for num in range(15):
+            remove = rand.randrange(val)
+
+            for i in range(number_of_test):  # Test each value 30 times
+                total_time = 0
+                total_time2 = 0
+                board_setup, input_size, remove = make_board(val, remove)  # Take board data from function that generates boards
+                board = setup(input_size, board_setup)  # Set up board with given input
+
+                if is_valid(board):
+                    output(board, input_size)
+                    print("Game over.")
+                else:
+                    print("Original Board is: ")
+                    output(board, input_size)
+                    solved, total_time = solve(board, input_size)
+                    solved2, total_time2 = solve2(board, input_size)
+
+                    """
+                    if solved:
+                        print("solved board is: ")
+                        output(board, input_size)
+                    else:
+                        print("No solution")
+                    """
+
+                time_log_back.append(total_time)
+                removed.append(remove * val)
+
+                time_log_back2.append(total_time2)
+                removed2.append(remove * val)
+
+        important.append(time_log_back)
+        important.append(removed)
+        back_time_dict[val * val] = important
+
+        important2.append(time_log_back2)
+        important2.append(removed2)
+        back_time_dict2[val * val] = important2
+
+    plot(back_time_dict, "Backtracking_1")
+    plt.figure()
+    plot(back_time_dict2, "Backtracking_W_Heuristic")
+    
+
+    
+def main():
+    alg_combined()
 
 
 main()
