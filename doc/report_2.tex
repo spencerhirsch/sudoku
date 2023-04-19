@@ -5,7 +5,7 @@
 \usepackage{setspace} 
 \doublespacing
 \usepackage{graphicx}
-\graphicspath{ {./output_images/} }
+\graphicspath{ {images_arch} }
 \usepackage{listings}
 \usepackage{xcolor}
 \lstset{
@@ -29,7 +29,7 @@
 Following our original submission we have implemented another algorithm. With 
 our original submission we implemented a backtracking algorithm, which worked
 very well for our first milestone. For this final milestone we have implemented
-a forwarding checking with a heuristic algorithm. Both algorithms solve the given
+a backtracking with a heuristic algorithm. Both algorithms solve the given
 test cases, however after doing an analysis of the two comparing the input size and
 the number of removed cells there is a clear difference in the complexity of the
 two different algorithms. 
@@ -105,10 +105,10 @@ ponints for each n x m pair.
 
 \pagebreak
 
-\noindent \textbf{Forwarding-checking with Heuristic}
+\noindent \textbf{Backtracking with Heuristic}
 
 
-\textit{How the forwarding-tracking with heuristic algorithm works}: \\
+\textit{How the backtracking with heuristic algorithm works}: \\
 
 
 \pagebreak
@@ -117,11 +117,71 @@ ponints for each n x m pair.
 
 
 
-\noindent \textit{Backtracking}
+\noindent \textit{Backtracking} \\ \\
+% Change the images
+\includegraphics[scale=0.5]{scatter_avg_Backtracking_1-1.png}
+\includegraphics[scale=0.5]{scatter_Backtracking_1-1.png}
 
 \bigskip
 
-\noindent \textit{Forward-checking with Heuristic}
+\noindent \textit{Backtracking with Heuristic} \\ \\
+% Change the images
+\includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-1.png}
+\includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-1.png}
+
+
+From the images it is clear to see that there is a significant difference in
+time complexity between the backtracking algorithm and the forward-checking 
+with heuristic algorithm. The graph with the average of the points of the
+backtracking shows what we believe to be O($n^2$) for time complexity. As the
+number of missing cells increases there appears to be an exponential growth
+with respect to time. However, in the case of the backtracking algorithm with
+a heuristic, it is much more difficult to determine Big-Oh complexity. In this 
+specific test case it appears to loosely conform to O(logn) complexity. However,
+strictly looking at the y-axis on both of the graphs we can see that the backtracking 
+with heuristic algorithm performs much quicker than the previous backtracking algorithm.
+
+\bigskip
+
+Here are some additional examples with some other test cases.
+
+\noindent \textit{Backtracking} \\ \\
+% Change the images
+\includegraphics[scale=0.5]{scatter_avg_Backtracking_1-2.png}
+\includegraphics[scale=0.5]{scatter_Backtracking_1-2.png}
+
+\bigskip
+
+\noindent \textit{Backtracking with Heuristic} \\ \\
+% Change the images
+\includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-2.png}
+\includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-2.png}
+
+Again, with this test case the backtracking algorithm appears to be in the shape of O($n^2$).
+However, the backtracking algorithm with heuristic appears to be more in the shape of constant
+time, besides the single point which is clearly an outliar. Despite the drastic change in the 
+shape of the graph for the backtracking with heuristic algorithm, the backtracking with heuristic algorithm
+performs much quicker than the backtracking algorithm that was originally implemented.
+
+\bigskip
+
+\noindent \textit{Backtracking} \\ \\
+% Change the images
+\includegraphics[scale=0.5]{scatter_avg_Backtracking_1-3.png}
+\includegraphics[scale=0.5]{scatter_Backtracking_1-3.png}
+
+\bigskip
+
+\noindent \textit{Backtracking with Heuristic} \\ \\
+% Change the images
+\includegraphics[scale=0.5]{scatter_avg_Backtracking_w_Heuristic-3.png}
+\includegraphics[scale=0.5]{scatter_Backtracking_w_Heuristic-3.png}
+
+These test cases aligned more with the first test case listed above. The
+backtracking algorithm again having more of a O($n^2$) complexity while the
+backtracking with heuristic algorithm had more of a O(logn) shape. Again, 
+the averages of the tests showed that the backtracking algorithm with heuristic
+signigicantly outperformed the backtracking algorihtm that was originally used.
 
 
 % \pagebreak

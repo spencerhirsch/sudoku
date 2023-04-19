@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import time
 import pprint
 import random as rand
+import numpy as np
 
 """
     Process the input and validate data. Ensure that the given input
@@ -259,7 +260,9 @@ def plot(back_time_dict, algo):
         times, removed = calculate(back_time_dict[val])
         x = removed
         y = times
+        # a, b = np.polyfit(x, y, 1)
         plt.scatter(x, y, label=val)
+        # plt.plot(x, a*x+b)
     plt.legend()
     plt.xlabel("Number of Empty Squares")
     plt.ylabel("Computation Time (seconds)")
