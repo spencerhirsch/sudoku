@@ -59,46 +59,70 @@ ponints for each n x m pair.
 
 \pagebreak
 
+\noindent \textbf{Backtracking Algorithm}
 
 \begin{lstlisting}[frame=single]
-# Function next empty cell in the matrix
-
-def find_cell(board, size):
-	iterate through the board to find the next instance of a 0 value in
-	a cell
-
-	If no value is found, return -1, -1
-
-	otherwise return the coordinate of the cell that contains a 0 value	
-
-
-# Function checks for a valid move given the value of the current
-# Cell
-
-def valid_move(coordinate_1, coordinate_2, board, size, number):
-
-	Iterate through the size of the board
-		Check to see if there is a cell in the column has the current val
-			if so, return false
-
-	Iterate through the size of the board
-		Check to see if there is a cell in the row that has the current val
-			If so, return false
-
-	return true  # It is a valid move for the algorithm to make
-
-
-def solve(board, size):
-	Create a list of all possible numbers based on size of the board
-	Find the coordinate to the next empty cell
+	# Function next empty cell in the matrix
 	
-	Check to see if cell is valid
-
-	iterate through all possible numbers to fill a cell
-		Check to see if the move is a vlid move
+	def find_cell(board, size):
+		iterate through the board to find the next instance of a 0 value in
+		a cell
 	
-	Continue until all cells are filled or no solution is found
+		If no value is found, return -1, -1
+	
+		otherwise return the coordinate of the cell that contains a 0 value	
+	
+	
+	# Function checks for a valid move given the value of the current
+	# Cell
+	
+	def valid_move(coordinate_1, coordinate_2, board, size, number):
+	
+		Iterate through the size of the board
+			Check to see if there is a cell in the column has the current val
+				if so, return false
+	
+		Iterate through the size of the board
+			Check to see if there is a cell in the row that has the current val
+				If so, return false
+	
+		return true  # It is a valid move for the algorithm to make
+	
+	
+	def solve(board, size):
+		Create a list of all possible numbers based on size of the board
+		Find the coordinate to the next empty cell
+		
+		Check to see if cell is valid
+	
+		iterate through all possible numbers to fill a cell
+			Check to see if the move is a vlid move
+		
+		Continue until all cells are filled or no solution is found
 \end{lstlisting}
+
+\textit{How the backtracking algorithm works:} \\
+
+\pagebreak
+
+\noindent \textbf{Forwarding-checking with Heuristic}
+
+
+\textit{How the forwarding-tracking with heuristic algorithm works}: \\
+
+
+\pagebreak
+
+\noindent \textbf{Analysis of Algorithms}
+
+
+
+\noindent \textit{Backtracking}
+
+\bigskip
+
+\noindent \textit{Forward-checking with Heuristic}
+
 
 % \pagebreak
 
