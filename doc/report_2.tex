@@ -62,54 +62,109 @@ ponints for each n x m pair.
 \noindent \textbf{Backtracking Algorithm}
 
 \begin{lstlisting}[frame=single]
-	# Function next empty cell in the matrix
+	# Find next empty cell in the matrix
+	def find_cell(board, size): -> int, int
+		for i in range size:
+			for j in range size:
+				if board[i][j] is empty
+					return i,j 
+		return -1, -1 # Full board, return sentinal values -1, -1
+
+	# Function checks for a valid move given the value of the current cell
+	def valid_move(cord1, cord2, board, size, number): -> boolean
+		# Given current cordinatess iterate through the row, and column
+		# to make sure psuedo sudoku rules are not violated
+		for i in range size:
+			if board[i][cord2] = number 
+			return false
+		for j in range size:
+			if board[cord1][j] = number
+			return false
+		return true
 	
-	def find_cell(board, size):
-		iterate through the board to find the next instance of a 0 value in
-		a cell
-	
-		If no value is found, return -1, -1
-	
-		otherwise return the coordinate of the cell that contains a 0 value	
-	
-	
-	# Function checks for a valid move given the value of the current
-	# Cell
-	
-	def valid_move(coordinate_1, coordinate_2, board, size, number):
-	
-		Iterate through the size of the board
-			Check to see if there is a cell in the column has the current val
-				if so, return false
-	
-		Iterate through the size of the board
-			Check to see if there is a cell in the row that has the current val
-				If so, return false
-	
-		return true  # It is a valid move for the algorithm to make
-	
-	
-	def solve(board, size):
-		Create a list of all possible numbers based on size of the board
-		Find the coordinate to the next empty cell
-		
-		Check to see if cell is valid
-	
-		iterate through all possible numbers to fill a cell
-			Check to see if the move is a vlid move
-		
-		Continue until all cells are filled or no solution is found
+	# Implements the full back tracking algorithm
+	solve(board, size): -> boolean
+		nums = list(1, ... N + 1)	# stores all possible numbers
+		cord1, cord2 = find_cell (board, size) # finds the next position
+		if cord1 and cord2 == -1: # board is filled with legal moves
+			return true
+		for num cell in nums	# iterates through every possible move
+			if valid_move(cord1, cord2, board, size, num):
+				board[cord1][cord2] = num
+				if solve(board, size):	# continue down this branch
+					return true
+				board[cord1][cord2] = 0	# failure, begin back tracking
+		return false # could not be solved
 \end{lstlisting}
 
 \textit{How the backtracking algorithm works:} \\
+
+\medskip
+	The original algorithm is built on the idea of back tracking. To begin we first
+	need to have an array storing all possible number selections for an NxN board. This means that
+	if the board is 3x3 we will store the numbers [1, 2, 3] in the array \verb|nums|. The next step is to find which cell we should
+	make the next valid move in, using \verb|cord1, cord2 = find_cell(board, size)|. This function works simple enough;
+	it merely iterates through the rows, and columns of the inputted board to find the next blank space. 
+	If no empty space is found we return the values -1, -1. This signifies the board is filled up fully, and that it is solved.
+
+	Moving into the main bulk of the algorithm, we enumerate through each \verb|num in nums|, and use the code
+	\verb|if valid_move(cord1, cord2, board, size, num)|. \verb|valid_move(...)| works on taking in the required information,
+	and seeing if the current \verb|num| is a valid move at that cordinate given the ruleset of psuedo sudoko. If it is valid we return true
+	else we return false, and move on to another number. If its a valid move however we set that boards cell to the current number
+	\verb|board[cord1][cord2] = num|.
+
+	Now that a valid move has been found we begin to recursively call the function using the code \verb|if solve(board, size)|. If this evaluates to true
+	then the board will recursively be filled up with valid moves. However if \verb|solve(...)| evaluates to false at any point in time, the current cell is reflagged 
+	as empty, and the back tracking begins. \\
+
+
 
 \pagebreak
 
 \noindent \textbf{Backtracking with Heuristic}
 
+\begin{lstlisting}[frame=single]
+	# Functions used prior that are unchanged:
+	def find_cell(board, size) -> int, int
+	def valid_move (cord1, cord2, board, size, number) -> boolean
+
+	# New function to implement basic forward checking
+	def get_unused_numbers(board, cord1, cord2, size) -> list
+		nums = set of the range(1, size + 1) to hold all possible values.
+
+		# Iterate through the row, and column of current cords to remove duplicates
+		for i in range of size:
+			current number = board[i][cord2]
+			if current number is in nums:
+				remove current number from nums
+		for j in range of size:
+			current number = board[cord1][j]
+			if current number is in nums:
+				remove current number from nums
+		return list(nums)
+
+	# This will slightly the code for solve2
+	def solve2 (board, size):
+		cord1, cord2 = find_cell (board, size) -> int, int
+		nums = get_unused_numbers(board, cord1, cord2, size) -> list
+		if cord1 and cord2 == -1:
+			return true
+		for num cell in nums
+			if valid_move(cord1, cord2, board, size, num):
+				board[cord1][cord2] = num
+				if solve(board, size):
+					return true
+				board[cord1][cord2] = 0
+
+\end{lstlisting}
 
 \textit{How the backtracking with heuristic algorithm works}: \\
 
+The only real change to the algorithm is the inclusion of the forward checking heuristic.
+This is implemented by the function \verb|get_unused_numbers(...)|. This works by checking the prior moves, and
+using this information to adjust which values we will attempt to use in our current move. We do this by simply taking our current list 
+of numbers, iterating through the row, and column of our current cords, and then removing any numbers found during the iterations from our 
+current number list.
 
 \pagebreak
 

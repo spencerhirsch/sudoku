@@ -2,19 +2,18 @@ useful funcs to make:
 valid_move_list() -> returns a list of valid numbers a cell can take
     check rows, and columns for unused numbers
 
-solve(board)        true or false
-    if board if full
-        save board
+solve(board, size) -> true or false
+    nums = list (1, ... N + 1)
+    cord1, cord2 = find_cell (board, size)
+
+    if cord1 and cord2 == -1:
         return true
 
-    for open cell in board
-        nums = valid_move_list(cell) 
-        for each num in nums
-            if cell can be filled with num
-                fill it
-                if (solve(board))
-                    return true   / filled up board with valid moves
-            
-            mark cell empty / backtracks
+    for num cell in nums
+        if valid_move(cord1, cord2, board, size, num):
+            board[cord1][cord2] = num
 
-        return false / the open cell didnt have a valid number to put, making this patheway unsolveable
+            if solve(board, size):
+                return true
+
+            board[cord1][cord2] = 0
