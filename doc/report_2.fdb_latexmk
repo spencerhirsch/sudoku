@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1681942079 "/Users/spencerhirsch/Documents/GitHub/sudoku/doc/report_2.tex" "report_2.pdf" "report_2" 1681942080
-  "/Users/spencerhirsch/Documents/GitHub/sudoku/doc/report_2.tex" 1681942079 16645 7bf4a9bf3e3b9c2523a4a058c43d3cfa ""
+["pdflatex"] 1681942495 "/Users/spencerhirsch/Documents/GitHub/sudoku/doc/report_2.tex" "report_2.pdf" "report_2" 1681942496
+  "/Users/spencerhirsch/Documents/GitHub/sudoku/doc/report_2.tex" 1681942494 16613 12f2d8c1a86637807f711ef47ca65a25 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1136768653 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -99,9 +99,9 @@
   "images_arch/scatter_avg_Backtracking_w_Heuristic-1.png" 1681874770 43236 c4f444c8008e28d0ea1cef06e3cbed2f ""
   "images_arch/scatter_avg_Backtracking_w_Heuristic-2.png" 1681874770 40170 f564485ad69d451ec868d69556d701d1 ""
   "images_arch/scatter_avg_Backtracking_w_Heuristic-3.png" 1681874770 42485 5854218027b5af9d3a88e9ac657debe5 ""
-  "report_2.aux" 1681942080 4647 1ffc6a6d9cce81ae5c4375dd2e627a8a "pdflatex"
+  "report_2.aux" 1681942496 4647 43138776f2d76a407d63be0e10348710 "pdflatex"
   "report_2.out" 0 -1 0 "pdflatex"
-  "report_2.tex" 1681942079 16645 7bf4a9bf3e3b9c2523a4a058c43d3cfa ""
+  "report_2.tex" 1681942494 16613 12f2d8c1a86637807f711ef47ca65a25 ""
   (generated)
   "report_2.aux"
   "report_2.log"
